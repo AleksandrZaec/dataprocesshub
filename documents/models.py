@@ -11,7 +11,7 @@ class Document(models.Model):
         ('отклонен', 'Отклонен'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='отправитель')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='отправитель')
     file = models.FileField(upload_to='documents/', verbose_name='документ')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='в обработке',
                               verbose_name='Статус документа')
@@ -23,4 +23,3 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.file.name} - {self.status}"
-

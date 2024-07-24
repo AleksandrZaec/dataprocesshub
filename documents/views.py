@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from documents.models import Document
 from documents.permissions import IsAdminGroupOrSuperuserOrReadOnly
 from documents.serializers import DocumentSerializer
+from documents.services import send_document_creation_email
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -11,4 +12,5 @@ class DocumentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsAdminGroupOrSuperuserOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, status='в обработке')
+        document = serializer.save(owner=self.request.user, status='в обработке')
+        send_document_creation_email(document, self.request)
