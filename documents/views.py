@@ -7,6 +7,9 @@ from documents.services import send_document_creation_email
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
+    """
+       ViewSet для управления документами. Позволяет создавать, обновлять, удалять и просматривать документы.
+    """
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticated, IsAdminGroupOrSuperuserOrReadOnly]

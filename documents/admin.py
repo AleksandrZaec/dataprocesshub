@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Document
+from .models import Document, User
 from django.utils.safestring import mark_safe
 
 from .tasks import send_document_status_email
@@ -7,6 +7,9 @@ from .tasks import send_document_status_email
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
+    """
+        Класс для управления моделью Document в админке Django.
+    """
     list_display = ('file', 'owner_details', 'status', 'uploaded_at')
     list_filter = ('status', 'owner')
     actions = ['approve_documents', 'reject_documents']

@@ -9,6 +9,9 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
+    """
+        Команда для создания суперпользователя.
+    """
     def handle(self, *args, **options):
         email = os.getenv('SUPERUSER_EMAIL')
         password = os.getenv('SUPERUSER_PASSWORD')

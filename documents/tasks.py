@@ -5,6 +5,9 @@ from django.conf import settings
 
 @shared_task
 def send_document_status_email(user_id, document_id, status):
+    """
+        Отправляет email уведомление пользователю о статусе его документа.
+    """
     from users.models import User
     from documents.models import Document
 

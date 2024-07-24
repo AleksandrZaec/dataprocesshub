@@ -4,6 +4,10 @@ from users.models import User
 
 
 class Command(BaseCommand):
+    """
+    Команда для добавления зарегистрированного пользователя по email в группу "Document Administrators"
+    и предоставления ему доступа к админке.
+    """
     help = 'Добавление зарегистрированного пользователя по email в группу Document Administrators и предоставление доступа к админке'
 
     def add_arguments(self, parser):

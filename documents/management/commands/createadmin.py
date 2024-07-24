@@ -7,6 +7,9 @@ User = get_user_model()
 
 
 class Command(BaseCommand):
+    """
+    Команда для создания администратора с заданным email и паролем.
+    """
     help = 'Создание админа с заданным email и паролем'
 
     def add_arguments(self, parser):

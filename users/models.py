@@ -6,6 +6,9 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class User(AbstractUser):
+    """
+        Кастомная модель пользователя для использования в приложении. Расширяет AbstractUser и изменяет некоторые поля.
+    """
     username = None
     first_name = models.CharField(max_length=50, verbose_name='имя')
     last_name = models.CharField(max_length=50, verbose_name='фамилия')
@@ -16,6 +19,7 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    mailing = models.BooleanField(default=True, verbose_name='Уведомлять администратора')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

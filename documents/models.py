@@ -5,6 +5,9 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Document(models.Model):
+    """
+        Модель документа, который загружается пользователями.
+    """
     STATUS_CHOICES = [
         ('в обработке', 'В обработке'),
         ('принят', 'Принят'),
