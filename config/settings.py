@@ -2,8 +2,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-from botocore.client import Config as BotoConfig
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
@@ -99,14 +97,6 @@ STATIC_URL = 'static/'
 
 STATICFILES = (BASE_DIR / "static",)
 
-# YANDEX_CLOUD_STORAGE_CONFIG = {
-#     'aws_access_key_id': os.getenv('YANDEX_CLOUD_ACCESS_KEY_ID'),
-#     'aws_secret_access_key': os.getenv('YANDEX_CLOUD_SECRET_ACCESS_KEY'),
-#     'endpoint_url': os.getenv('YANDEX_CLOUD_ENDPOINT_URL', 'https://storage.yandexcloud.net'),
-#     'config': BotoConfig(signature_version='s3v4'),
-#     'region_name': 'us-east-1'
-# }
-
 AWS_ACCESS_KEY_ID = os.getenv('YANDEX_CLOUD_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('YANDEX_CLOUD_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('YANDEX_CLOUD_BUCKET_NAME')
@@ -114,10 +104,9 @@ AWS_S3_ENDPOINT_URL = os.getenv('YANDEX_CLOUD_ENDPOINT_URL', 'https://storage.ya
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.storage.yandexcloud.net'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'config.custom_storage.CustomS3Boto3Storage'
 
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

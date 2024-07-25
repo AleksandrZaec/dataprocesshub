@@ -17,3 +17,4 @@ class DocumentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         document = serializer.save(owner=self.request.user, status='в обработке')
         send_document_creation_email(document, self.request)
+

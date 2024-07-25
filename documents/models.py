@@ -19,6 +19,7 @@ class Document(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='в обработке',
                               verbose_name='Статус документа')
     uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name='Время доставки')
+    rejection_comment = models.TextField(**NULLABLE, verbose_name='Комментарий к отклонению')
 
     class Meta:
         verbose_name = 'Документ'

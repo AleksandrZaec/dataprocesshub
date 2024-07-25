@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reject Documents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            padding: 3em;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 1em;
+        }
+        form {
+            margin-top: 1.5em;
+        }
+        label {
+            margin-bottom: 1em;
+            color: #333333;
+            display: block;
+            font-size: 1.4em;
+        }
+        textarea {
+            border: 1px solid #CCCCCC;
+            padding: 1em;
+            font-size: 14px; /* Размер шрифта уменьшен */
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-bottom: 1.5em;
+            height: 150px;
+        }
+        input[type="submit"] {
+            padding: 1em 2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.4em;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: block;
+            margin-top: 2em;
+            text-align: center;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.2em;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Отклонить документы</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_rejection_comment">Комментарий к отклонению:</label>
+            {{ form.rejection_comment }}
+            <input type="submit" value="Отклонить документы">
+        </form>
+        <a class="back-link" href="{% url 'admin:documents_document_changelist' %}">Вернуться к списку документов</a>
+    </div>
+</body>
+</html>

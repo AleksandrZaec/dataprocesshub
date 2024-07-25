@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from .models import Document
-from .validators import FileTypeValidator
+from documents.models import Document
+from documents.validators import FileTypeValidator
 
 
 class DocumentSerializer(ModelSerializer):

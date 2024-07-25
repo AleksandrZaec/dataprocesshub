@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 @shared_task
-def send_document_status_email(user_id, document_id, status):
+def send_document_status_email(user_id, document_id, status, comment=None):
     """
         Отправляет email уведомление пользователю о статусе его документа.
     """
@@ -16,6 +16,8 @@ def send_document_status_email(user_id, document_id, status):
 
     subject = 'Статус вашего документа'
     message = f'Здравствуйте, {user.first_name}!\n\nВаш документ "{document.file.name}" был {status}.'
+    if status == 'отклонен' and comment:
+        message += f'\n\nПричина отклонения: {comment}'
     send_mail(
         subject,
         message,
