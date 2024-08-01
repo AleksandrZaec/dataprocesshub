@@ -14,4 +14,3 @@ class UserCreateAPIView(CreateAPIView):
         user = serializer.save()
         user.set_password(serializer.validated_data['password'])
         user.save()
-

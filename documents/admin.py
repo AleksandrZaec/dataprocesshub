@@ -16,7 +16,7 @@ class DocumentAdmin(admin.ModelAdmin):
        Административный интерфейс для модели Document.
        Позволяет администратору просматривать, фильтровать и выполнять действия с документами.
     """
-    list_display = ('file', 'owner_details', 'status', 'uploaded_at')
+    list_display = ('file', 'owner_details', 'status', 'uploaded_at', 'rejection_comment')
     list_filter = ('status', 'owner')
     actions = ['approve_documents', 'reject_documents']
 

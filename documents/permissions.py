@@ -38,7 +38,6 @@ def get_document_permissions():
     content_type = ContentType.objects.get_for_model(Document)
 
     try:
-        # Используйте стандартные коды разрешений
         view_permission = Permission.objects.get(codename='view_document', content_type=content_type)
     except Permission.DoesNotExist:
         view_permission = None

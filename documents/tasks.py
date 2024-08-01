@@ -15,7 +15,7 @@ def send_document_status_email(user_id, document_id, status, comment=None):
     document = Document.objects.get(id=document_id)
 
     subject = 'Статус вашего документа'
-    message = f'Здравствуйте, {user.first_name}!\n\nВаш документ "{document.file.name}" был {status}.'
+    message = f'Здравствуйте, {user.first_name}!\n\nВаш документ был {status}.'
     if status == 'отклонен' and comment:
         message += f'\n\nПричина отклонения: {comment}'
     send_mail(
@@ -23,5 +23,4 @@ def send_document_status_email(user_id, document_id, status, comment=None):
         message,
         settings.EMAIL_HOST_USER,
         [user.email],
-        fail_silently=False,
-    )
+        fail_silently=False,)
