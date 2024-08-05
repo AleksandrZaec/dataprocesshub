@@ -56,7 +56,6 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.WARNING('Разрешение на создание документов не найдено.'))
 
-        # Добавляем пользователя в группу
         user.groups.add(group)
         self.stdout.write(
             self.style.SUCCESS(f'Пользователь с email "{email}" успешно добавлен в группу "{group_name}".'))
