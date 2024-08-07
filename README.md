@@ -32,9 +32,9 @@
 
 Запустите проект с использованием Docker Compose: docker-compose up --build
 
-После того как контейнеры будут запущены, создайте суперпользователя для доступа к админ-панели Django: docker-compose exec app python3 manage.py createsuperuser
+После того как контейнеры будут запущены, создайте суперпользователя для доступа к админ-панели Django: **docker-compose exec app python3 manage.py csu**
 
-Также создайте администратора: docker-compose exec app python3 manage.py createadmin --email <почта администратора на которую будут приходить уведомления> --password <пароль администратора>
+Также создайте администратора: **docker-compose exec app python3 manage.py createadmin --email <почта администратора на которую будут приходить уведомления> --password <пароль администратора>**
 
 Откройте браузер и перейдите по адресу http://localhost:8000/admin, чтобы войти в админ-панель с использованием учетных данных суперпользователя или администратора
 
