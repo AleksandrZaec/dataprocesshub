@@ -101,16 +101,17 @@ STATIC_URL = 'static/'
 
 STATICFILES = (BASE_DIR / "static",)
 
-AWS_ACCESS_KEY_ID = os.getenv('YANDEX_CLOUD_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('YANDEX_CLOUD_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('YANDEX_CLOUD_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.getenv('YANDEX_CLOUD_ENDPOINT_URL', 'https://storage.yandexcloud.net')
+AWS_S3_ENDPOINT_URL = f'http://{os.getenv("MINIO_STORAGE_ENDPOINT")}'
+AWS_ACCESS_KEY_ID = os.getenv('MINIO_STORAGE_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.getenv('MINIO_STORAGE_SECRET_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('MINIO_STORAGE_MEDIA_BUCKET_NAME')
 AWS_S3_REGION_NAME = 'us-east-1'
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.storage.yandexcloud.net'
+AWS_S3_CUSTOM_DOMAIN = None
+AWS_QUERYSTRING_AUTH = False
+
 
 DEFAULT_FILE_STORAGE = 'config.custom_storage.CustomS3Boto3Storage'
-
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+MEDIA_URL = f'http://{os.getenv("MINIO_STORAGE_ENDPOINT_PUBLIC")}/{os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME")}/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -143,7 +144,6 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
@@ -153,3 +153,16 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ]
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
