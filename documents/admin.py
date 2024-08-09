@@ -16,9 +16,22 @@ class DocumentAdmin(admin.ModelAdmin):
        Административный интерфейс для модели Document.
        Позволяет администратору просматривать, фильтровать и выполнять действия с документами.
     """
-    list_display = ('file', 'owner_details', 'status', 'uploaded_at', 'rejection_comment')
+    list_display = ('display_document', 'owner_details', 'status', 'uploaded_at', 'rejection_comment')
     list_filter = ('status', 'owner')
     actions = ['approve_documents', 'reject_documents']
+
+    def display_document(self, obj):
+        """
+        Возвращает ссылку на документ или причину отказа в зависимости от статуса.
+        """
+        if obj.status == 'отклонен':
+            if obj.rejection_comment:
+                return f"Документ отклонен по причине: {obj.rejection_comment}"
+            return "Документ отклонен: комментарий не указан"
+        if obj.file:
+            return mark_safe(f'<a href="{obj.file.url}" target="_blank">{obj.file.name}</a>')
+
+    display_document.short_description = 'Документ'
 
     # def get_queryset(self, request):
     #     """
