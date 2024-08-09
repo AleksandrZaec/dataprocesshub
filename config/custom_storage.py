@@ -1,7 +1,6 @@
 from storages.backends.s3boto3 import S3Boto3Storage
 import uuid
 import os
-from django.conf import settings
 
 
 class CustomS3Boto3Storage(S3Boto3Storage):
@@ -25,6 +24,5 @@ class CustomS3Boto3Storage(S3Boto3Storage):
 
         original_url = super().url(name, parameters, expire)
         public_url = f'http://{os.getenv("MINIO_STORAGE_ENDPOINT_PUBLIC")}'
-        relative_path = original_url.split(os.getenv("MINIO_STORAGE_ENDPOINT"))[-1]
+        relative_path = original_url.split(os.getenv("S3_ENDPOINT"))[-1]
         return f'{public_url.rstrip("/")}{relative_path}'
-
