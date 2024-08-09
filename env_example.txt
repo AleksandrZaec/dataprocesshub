@@ -21,13 +21,15 @@ SUPERUSER_PASSWORD='Пароль суперпользователя'
 EMAIL_HOST_USER='Пользователь почтового хоста'
 EMAIL_HOST_PASSWORD='Пароль почтового хоста'
 
-# MinIO settings
-MINIO_STORAGE_ENDPOINT='Адрес сервера MinIO'
-MINIO_STORAGE_ACCESS_KEY='Ваш ключ доступа к MinIO'
-MINIO_STORAGE_SECRET_KEY='Ваш секретный ключ доступа к MinIO'
-MINIO_STORAGE_USE_HTTPS= (True или False)
-MINIO_STORAGE_MEDIA_BUCKET_NAME='Имя вашего бакета'
-MINIO_STORAGE_ENDPOINT_public='Публичный адрес сервера MinIO'
+# STORAGE_S3 setting
+S3_ENDPOINT='Хост S3-хранилища'
+S3_ACCESS_KEY='Ключ доступа к S3'
+S3_SECRET_KEY='Секретный ключ доступа к S3'
+S3_BUCKET='Имя бакета'
+S3_REGION='Регион'
+S3_CUSTOM_DOMAIN='Кастомный домен' (если не требуется указываем значение None)
+
+# MinIO settings (нужны только при использовании локального MinIO)
 MINIO_ROOT_USER='пользователь MinIO'
 MINIO_ROOT_PASSWORD='Пароль пользователя MinIO'
 MINIO_STORAGE_ENDPOINT_PUBLIC='Публичный адрес MinIO'
