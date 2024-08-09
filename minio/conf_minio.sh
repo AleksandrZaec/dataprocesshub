@@ -14,14 +14,14 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Создание бакета..."
-mc mb myminio/"$MINIO_STORAGE_MEDIA_BUCKET_NAME"
+mc mb myminio/"$S3_BUCKET"
 if [ $? -ne 0 ]; then
     echo "Не удалось создать бакет"
     exit 1
 fi
 
 echo "Установка политики доступа для бакета на публичную..."
-mc anonymous set public myminio/"$MINIO_STORAGE_MEDIA_BUCKET_NAME"
+mc anonymous set public myminio/"$S3_BUCKET"
 if [ $? -ne 0 ]; then
     echo "Не удалось установить политику доступа для бакета"
     exit 1
