@@ -1,15 +1,17 @@
 from django.conf import settings
 import boto3
-from documents.tasks import send_document_creation_email_task
-from django.urls import reverse
+from django.contrib.auth.models import Group
 
 
-def send_document_creation_email(document, request):
+def get_admin_emails(group_name='Document Administrators'):
     """
-    Отправляет email уведомление о создании нового документа через Celery.
+    Возвращает список email адресов администраторов из указанной группы.
     """
-    request_url = request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))
-    send_document_creation_email_task.delay(document.id, request_url)
+    try:
+        group = Group.objects.get(name=group_name)
+        return [user.email for user in group.user_set.filter(mailing=True)]
+    except Group.DoesNotExist:
+        return []
 
 
 def delete_from_storage(file_name):
@@ -28,4 +30,3 @@ def delete_from_storage(file_name):
         print(f"Successfully deleted file: {file_name}")
     except Exception as e:
         print(f"Error deleting file: {e}")
-

@@ -1,11 +1,11 @@
+from django.urls import reverse
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
 from documents.models import Document
 from documents.permissions import IsAdminGroupOrSuperuserOrReadOnly
 from documents.serializers import DocumentSerializer
-from documents.services import send_document_creation_email
+from documents.tasks import send_document_creation_email
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -22,6 +22,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         """
         document = serializer.save(owner=self.request.user, status='в обработке')
         send_document_creation_email(document, self.request)
+        request_url = self.request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))
 
     def create(self, request, *args, **kwargs):
         """
