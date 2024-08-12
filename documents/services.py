@@ -1,45 +1,15 @@
-from django.core.mail import send_mail
-from django.urls import reverse
 from django.conf import settings
-from django.contrib.auth.models import Group
-
 import boto3
-
-
-def get_admin_emails(group_name='Document Administrators'):
-    """
-        Возвращает список email адресов администраторов из указанной группы.
-    """
-    try:
-        group = Group.objects.get(name=group_name)
-        return [user.email for user in group.user_set.filter(mailing=True)]
-    except Group.DoesNotExist:
-        return []
+from documents.tasks import send_document_creation_email_task
+from django.urls import reverse
 
 
 def send_document_creation_email(document, request):
     """
-       Отправляет email уведомление о создании нового документа.
+    Отправляет email уведомление о создании нового документа через Celery.
     """
-    subject = 'Новый документ создан'
-    message = (
-        f"Пользователь {document.owner.email} создал новый документ.\n\n"
-        f"Детали документа:\n"
-        f"Имя файла: {document.file.name}\n"
-        f"Статус: {document.status}\n"
-        f"Время загрузки: {document.uploaded_at}\n\n"
-        f"Просмотреть документ: {request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))}"
-    )
-
-    admin_emails = get_admin_emails()
-    if admin_emails:
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            admin_emails,
-            fail_silently=False,
-        )
+    request_url = request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))
+    send_document_creation_email_task.delay(document.id, request_url)
 
 
 def delete_from_storage(file_name):
