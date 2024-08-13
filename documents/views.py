@@ -22,7 +22,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         """
         document = serializer.save(owner=self.request.user, status='в обработке')
         request_url = self.request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))
-        send_document_creation_email(document.id, request_url)
+        send_document_creation_email.delay(document.id, request_url)
 
     def create(self, request, *args, **kwargs):
         """
