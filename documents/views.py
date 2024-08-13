@@ -21,8 +21,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
             Сохраняет документ и отправляет email-уведомление.
         """
         document = serializer.save(owner=self.request.user, status='в обработке')
-        send_document_creation_email(document, self.request)
         request_url = self.request.build_absolute_uri(reverse('admin:documents_document_change', args=[document.id]))
+        send_document_creation_email(document, self.request)
 
     def create(self, request, *args, **kwargs):
         """
@@ -32,4 +32,3 @@ class DocumentViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response({'message': 'Ваш документ успешно загружен'}, status=status.HTTP_201_CREATED)
-
